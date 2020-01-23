@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 /*
  * packetcounter.c
  *
  *  Created on: 19/01/2020
- *      Author: paulo
+ *      Author: Paulo Miguel Almeida
  */
 
 #include "packetcounter.h"

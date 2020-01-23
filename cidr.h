@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 /*
  * cidr.h
  *
  *  Created on: 23/01/2020
- *      Author: paulo
+ *      Author: Paulo Miguel Almeida
  */
 
 #ifndef KERNEL_CLOUD_CIDR_H_

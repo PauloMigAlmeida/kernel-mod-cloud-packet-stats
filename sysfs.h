@@ -1,5 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+/*
+ * sysfs.h
+ *
+ *  Created on: 19/01/2020
+ *      Author: Paulo Miguel Almeida
+ */
 #ifndef KERNEL_CLOUD_PACKET_STATS_SYSFS_H
-
 #define KERNEL_CLOUD_PACKET_STATS_SYSFS_H
 
 #include <linux/kobject.h>

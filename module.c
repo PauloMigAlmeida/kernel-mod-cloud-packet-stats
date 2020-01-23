@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 /*
  * module.c
  *
  *  Created on: 19/01/2020
- *      Author: paulo
+ *      Author: Paulo Miguel Almeida
  */
 #include <linux/module.h>
 #include <linux/init.h>

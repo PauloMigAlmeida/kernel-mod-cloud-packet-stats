@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 /*
  * netfilter.h
  *
  *  Created on: 19/01/2020
- *      Author: paulo
+ *      Author: Paulo Miguel Almeida
  */
 
 #ifndef KERNEL_CLOUD_NETFILTER_H_

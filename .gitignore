@@ -55,3 +55,7 @@ dkms.conf
 .cproject
 .project
 .settings/
+
+# Project specific
+source_prep_build_tmp/
+cloud_cidr_block.in

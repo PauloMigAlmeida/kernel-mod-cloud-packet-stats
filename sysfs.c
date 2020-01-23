@@ -1,11 +1,12 @@
-#include "sysfs.h"
-
+// SPDX-License-Identifier: GPL-3.0-or-later
 /*
  * sysfs.c
  *
  *  Created on: 19/01/2020
- *      Author: paulo
+ *      Author: Paulo Miguel Almeida
  */
+
+#include "sysfs.h"
 
 //Macros
 #define SYSFS_CREATE_FILE(kobject, kobj_attribute) 				\
