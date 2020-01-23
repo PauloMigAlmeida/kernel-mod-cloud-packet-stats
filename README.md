@@ -37,6 +37,14 @@ $ tail /sys/cloud_packet_stats/*
 ==> /sys/cloud_packet_stats/gcp <==
 472
 ```
+Here goes a list of websites that you can use to force counters to go up:
+
+|  Cloud Provider| URL |
+|---|---|
+| AWS | https://www.cloudping.info/  |
+| GCP | http://www.gcping.com/  |
+| Azure | https://cloudpingtest.com/azure  |
+
 ### Reset counters
 ```
 $ sudo -s
