@@ -18,18 +18,22 @@ static int __init m_init(void)
 	if (err_ret) {
 		pr_err("%s: error while executing sysfs_init()\n",
 				KBUILD_MODNAME);
-		return err_ret;
+		goto fail_sysfs;
 	}
 
 	err_ret = cloud_packet_netfilter_init();
 	if (err_ret) {
 		pr_err("%s: error while executing netfilter_init()\n",
 				KBUILD_MODNAME);
-		return err_ret;
+		goto fail_netfilter;
 	}
 
 	pr_info("%s: module loaded from 0x%p\n", KBUILD_MODNAME, m_init);
 	return 0;
+
+	fail_netfilter: cloud_packet_netfilter_destroy();
+	fail_sysfs: sysfs_destroy();
+	fail_out: return err_ret;
 }
 
 static void __exit m_exit(void)
