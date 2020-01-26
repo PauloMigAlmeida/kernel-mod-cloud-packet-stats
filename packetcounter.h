@@ -21,8 +21,8 @@
 #define AZURE_CLOUD __stringify(AZURE_CLOUD_INTERNAL)
 
 void init_counters(void);
-int reset_counter(const char* cloud_provider_name);
-long long int get_counter(const char* cloud_provider_name);
-void increment_counter(const char* cloud_provider_name);
+int reset_counter(const char *cloud_provider_name);
+long long int get_counter(const char *cloud_provider_name);
+void increment_counter(const char *cloud_provider_name);
 
 #endif /* KERNEL_CLOUD_PACKET_COUNTER_H_ */

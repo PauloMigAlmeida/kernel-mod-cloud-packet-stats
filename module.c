@@ -15,14 +15,16 @@ static int __init m_init(void)
 	int err_ret;
 
 	err_ret = sysfs_init();
-	if(err_ret){
-		pr_err("%s: error while executing sysfs_init()\n", KBUILD_MODNAME);
+	if (err_ret) {
+		pr_err("%s: error while executing sysfs_init()\n",
+				KBUILD_MODNAME);
 		return err_ret;
 	}
 
 	err_ret = cloud_packet_netfilter_init();
-	if(err_ret){
-		pr_err("%s: error while executing netfilter_init()\n", KBUILD_MODNAME);
+	if (err_ret) {
+		pr_err("%s: error while executing netfilter_init()\n",
+				KBUILD_MODNAME);
 		return err_ret;
 	}
 
