@@ -4,7 +4,7 @@
 
 # I get the feeling that this URL will eventually change...so I'm making
 # this a variable
-JSON_URL="https://download.microsoft.com/download/7/1/D/71D86715-5596-4529-9B13-DA13A5DE5B63/ServiceTags_Public_20200112.json"
+JSON_URL="$(curl -s 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=56519' | grep 'downloadretry' | grep -oP '(?<=\")https.*?(?=\")')"
 
 ERRORS_FOUND=()
 if ! [ -x "$(command -v curl)" ]; then

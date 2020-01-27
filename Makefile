@@ -6,11 +6,11 @@ export KROOT=/lib/modules/$(shell uname -r)/build
 
 obj-m +=  kernel_cloud_packet_stats.o
 
-kernel_cloud_packet_stats-y :=  module.o 			\
-		  						sysfs.o 			\
-		  						packetcounter.o 	\
-		  						netfilter.o 		\
-		  						cidr.o 		\
+kernel_cloud_packet_stats-y :=  module.o        \
+		  		sysfs.o         \
+		  		packetcounter.o \
+		  		netfilter.o     \
+		  		cidr.o          \
 
 allofit:  modules
 source_prep_create:

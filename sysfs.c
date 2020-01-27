@@ -70,7 +70,7 @@ int sysfs_init(void)
 		pr_info(
 				"%s: error creating kobject with name 'cloud_packet_stats'",
 				KBUILD_MODNAME);
-		return -ENOMEM;
+		goto fail_kobj_create_add;
 	}
 
 	SYSFS_CREATE_FILE(cloud_packet_stats, aws_packet_counter_attr);
@@ -80,4 +80,7 @@ int sysfs_init(void)
 	init_counters();
 
 	return 0;
+
+	fail_kobj_create_add: sysfs_destroy();
+	fail_0:return -ENOMEM;
 }
