@@ -8,6 +8,16 @@
 
 #include "packetcounter.h"
 
+/*
+ * Rationale:
+ * Depending on the number of physical network interfaces you have on
+ * your machine, you can have interrupts handled in different cores.
+ * This alone forces us to have some sort of locking mechanism if we
+ * want to have a centralised counter. Another mechanism is to define
+ * variables per CPU and sum them up when we need to read it which exempt
+ * us from dealing with a good porting of SMP problems. (which is what
+ * I decided to do)
+ */
 DEFINE_PER_CPU(unsigned long int, aws_packet_counter);
 DEFINE_PER_CPU(unsigned long int, gcp_packet_counter);
 DEFINE_PER_CPU(unsigned long int, azure_packet_counter);
@@ -90,9 +100,9 @@ void increment_counter(const char *cloud_provider_name)
 {
 	unsigned long int *ref = find_counter_ref(cloud_provider_name);
 	if (ref)
-		this_cpu_inc(*ref);
+		this_cpu_inc(*ref); //This should take care of preemptable stuff
 	/*
 	 * I don't like this approach very much...I will try to refactor
-	 * find_counter_ref to void "&*ptr"ing it.
+	 * find_counter_ref to avoid "&*ptr"ing it.
 	 */
 }
