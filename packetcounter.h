@@ -9,6 +9,7 @@
 #ifndef KERNEL_CLOUD_PACKET_COUNTER_H_
 #define KERNEL_CLOUD_PACKET_COUNTER_H_
 
+#include <linux/percpu.h>
 #include <linux/errno.h>
 #include <linux/stddef.h>
 #include <linux/string.h>
@@ -22,7 +23,7 @@
 
 void init_counters(void);
 int reset_counter(const char *cloud_provider_name);
-long long int get_counter(const char *cloud_provider_name);
+unsigned long long int get_counter(const char *cloud_provider_name);
 void increment_counter(const char *cloud_provider_name);
 
 #endif /* KERNEL_CLOUD_PACKET_COUNTER_H_ */

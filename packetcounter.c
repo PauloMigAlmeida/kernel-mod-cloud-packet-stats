@@ -8,11 +8,40 @@
 
 #include "packetcounter.h"
 
-static long long int aws_packet_counter;
-static long long int gcp_packet_counter;
-static long long int azure_packet_counter;
+DEFINE_PER_CPU(unsigned long int, aws_packet_counter);
+DEFINE_PER_CPU(unsigned long int, gcp_packet_counter);
+DEFINE_PER_CPU(unsigned long int, azure_packet_counter);
 
-long long int* find_counter_ref(const char *name)
+unsigned long long int read_counter(unsigned long int* ref)
+{
+	unsigned long long int sum = 0;
+	unsigned int cpu;
+
+	preempt_disable();
+	for_each_online_cpu(cpu)
+	{
+		int total_per_cpu = *per_cpu_ptr(ref, cpu);
+		sum += total_per_cpu;
+//		pr_info("%s: cpu:%u total_per_cpu: %u", KBUILD_MODNAME, cpu, total_per_cpu);
+	}
+	preempt_enable();
+
+	return sum;
+}
+
+void write_counter(unsigned long int* ref, unsigned long int value)
+{
+	unsigned int cpu;
+
+	preempt_disable();
+	for_each_online_cpu(cpu)
+	{
+		*per_cpu_ptr(ref, cpu) = value;
+	}
+	preempt_enable();
+}
+
+__always_inline unsigned long int* find_counter_ref(const char *name)
 {
 	if (!strcmp(name, AWS_CLOUD))
 		return &aws_packet_counter;
@@ -26,31 +55,31 @@ long long int* find_counter_ref(const char *name)
 
 void init_counters(void)
 {
-	aws_packet_counter = 0;
-	gcp_packet_counter = 0;
-	azure_packet_counter = 0;
+	write_counter(&aws_packet_counter, 0);
+	write_counter(&gcp_packet_counter, 0);
+	write_counter(&azure_packet_counter, 0);
 }
 
 int reset_counter(const char *cloud_provider_name)
 {
 	int result = 0;
-	long long int *ref = find_counter_ref(cloud_provider_name);
+	unsigned long int *ref = find_counter_ref(cloud_provider_name);
 
 	if (ref)
-		*ref = 0;
+		write_counter(ref, 0);
 	else
 		result = -EINVAL;
 
 	return result;
 }
 
-long long int get_counter(const char *cloud_provider_name)
+unsigned long long int get_counter(const char *cloud_provider_name)
 {
-	long long int result;
-	long long int *ref = find_counter_ref(cloud_provider_name);
+	unsigned long long int result;
+	unsigned long int *ref = find_counter_ref(cloud_provider_name);
 
 	if (ref)
-		result = *ref;
+		result = read_counter(ref);
 	else
 		result = -EINVAL;
 
@@ -59,8 +88,11 @@ long long int get_counter(const char *cloud_provider_name)
 
 void increment_counter(const char *cloud_provider_name)
 {
-	long long int *ref = find_counter_ref(cloud_provider_name);
-	//FIXME: Make sure that this operation happens atomically.
+	unsigned long int *ref = find_counter_ref(cloud_provider_name);
 	if (ref)
-		*ref += 1;
+		this_cpu_inc(*ref);
+	/*
+	 * I don't like this approach very much...I will try to refactor
+	 * find_counter_ref to void "&*ptr"ing it.
+	 */
 }
