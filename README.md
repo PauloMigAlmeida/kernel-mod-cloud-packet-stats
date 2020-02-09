@@ -1,6 +1,9 @@
 # kernel-mod-cloud-packet-stats
 A module for the Linux kernel that counts how many packets to each cloud provider your machine has sent
 
+## High-level article:
+https://medium.com/@paulo.miguel.almeida.rodenas/how-much-traffic-from-your-machine-goes-to-the-cloud-63792e670b28
+
 ## Installation
 ### Dependencies:
 ```
